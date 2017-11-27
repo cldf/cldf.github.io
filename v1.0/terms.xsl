@@ -13,6 +13,7 @@
         xmlns:owl="http://www.w3.org/2002/07/owl#"
         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
         xmlns:dc="http://purl.org/dc/terms/"
+        xmlns:csvw="http://www.w3.org/ns/csvw#"
         exclude-result-prefixes="daml rdf rdfs dc #default"
         version="1.0">
     <xsl:output
@@ -140,15 +141,7 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                      aria-labelledby="headingOne">
                                                     <div class="panel-body">
                                                         <ul class="list-unstyled">
-                                                            <xsl:for-each
-                                                                    select="//rdfs:Class[@dc:type='module']">
-                                                                <li>
-                                                                    <a href="#{substring-after(@rdf:about, '#')}">
-                                                                        <xsl:value-of
-                                                                                select="rdfs:label/text()"/>
-                                                                    </a>
-                                                                </li>
-                                                            </xsl:for-each>
+                                                            <xsl:apply-templates mode="link-item" select="//rdfs:Class[@dc:type='module']"/>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -173,15 +166,7 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                      aria-labelledby="headingTwo">
                                                     <div class="panel-body">
                                                         <ul class="list-unstyled">
-                                                            <xsl:for-each
-                                                                    select="//rdfs:Class[@dc:type='table']">
-                                                                <li>
-                                                                    <a href="#{substring-after(@rdf:about, '#')}">
-                                                                        <xsl:value-of
-                                                                                select="rdfs:label/text()"/>
-                                                                    </a>
-                                                                </li>
-                                                            </xsl:for-each>
+                                                            <xsl:apply-templates mode="link-item" select="//rdfs:Class[@dc:type='table']"/>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -206,15 +191,7 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                      aria-labelledby="headingThree">
                                                     <div class="panel-body">
                                                         <ul class="list-unstyled">
-                                                            <xsl:for-each
-                                                                    select="//rdf:Property[@dc:type!='reference-property']">
-                                                                <li>
-                                                                    <a href="#{substring-after(@rdf:about, '#')}">
-                                                                        <xsl:value-of
-                                                                                select="rdfs:label/text()"/>
-                                                                    </a>
-                                                                </li>
-                                                            </xsl:for-each>
+                                                            <xsl:apply-templates mode="link-item" select="//rdf:Property[@dc:type!='reference-property']"/>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -239,15 +216,7 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                      aria-labelledby="headingFour">
                                                     <div class="panel-body">
                                                         <ul class="list-unstyled">
-                                                            <xsl:for-each
-                                                                    select="//rdf:Property[@dc:type='reference-property']">
-                                                                <li>
-                                                                    <a href="#{substring-after(@rdf:about, '#')}">
-                                                                        <xsl:value-of
-                                                                                select="rdfs:label/text()"/>
-                                                                    </a>
-                                                                </li>
-                                                            </xsl:for-each>
+                                                            <xsl:apply-templates mode="link-item" select="//rdf:Property[@dc:type='reference-property']"/>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -378,6 +347,14 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
         <xsl:apply-templates mode="meta" select="*"/>
     </xsl:template>
 
+    <xsl:template mode="link-item" match="*">
+        <li>
+            <a href="#{substring-after(@rdf:about, '#')}">
+                <xsl:value-of select="translate(csvw:name/text(), '&quot;', '')"/>
+            </a>
+        </li>
+    </xsl:template>
+
     <xsl:template mode="schema-title" match="*">
         <h1>
             <xsl:choose>
@@ -483,15 +460,7 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
              style="border-bottom: 1px dashed gray; margin-bottom: 10px; padding-bottom: 10px;">
             <div class="col-md-7">
                 <h3 id="{$id}">
-                    <xsl:choose>
-                        <xsl:when test="rdfs:label|@rdfs:label">
-                            <xsl:apply-templates mode="value"
-                                                 select="rdfs:label|@rdfs:label"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$id"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:value-of select="translate(csvw:name/text(), '&quot;', '')"/>
                     <a href="#top" title="go to top of the page"
                        style="vertical-align: bottom">
                         &#x21eb;
@@ -561,16 +530,23 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                 <xsl:with-param name="ns" select="$ns"/>
             </xsl:apply-templates>
         </xsl:variable>
-        <xsl:if test="local-name() = 'source'">
-            <a href="{$res}">
-                <xsl:value-of select="substring-after($res, '=')"/>
-            </a>
-        </xsl:if>
-        <xsl:if test="local-name() != 'source'">
-            <a href="{$res}">
-                <xsl:value-of select="$res"/>
-            </a>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="local-name() = 'references'">
+                <a href="{@rdf:resource}">
+                    <xsl:value-of select="substring-after(@rdf:resource, '#')"/>
+                </a>
+            </xsl:when>
+            <xsl:when test="local-name() = 'source'">
+                <a href="{$res}">
+                    <xsl:value-of select="substring-after($res, '=')"/>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <a href="{$res}">
+                    <xsl:value-of select="$res"/>
+                </a>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template mode="value" match="@*">
