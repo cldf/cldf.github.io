@@ -84,25 +84,25 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                     Specification
                                                 </a>
                                                 <a class="nav-item nav-link btn btn-nav"
-                                                   href="v1.0/terms.rdf">Ontology
+                                                   href="terms.rdf">Ontology
                                                 </a>
                                                 <a class="nav-item nav-link btn btn-nav"
-                                                   href="https://github.com/glottobank/cldf/tree/master/examples">
+                                                   href="/examples.html">
                                                     Examples
                                                 </a>
                                             </div>
                                             <div class="navbar-nav nav-main">
-                                                <a class="nav-item nav-link active"
+                                                <a class="nav-item nav-link"
                                                    href="/">Home
                                                 </a>
                                                 <a href="https://github.com/glottobank/cldf"
                                                    class="nav-item nav-link">Specification
                                                 </a>
                                                 <a href="v1.0/terms.rdf"
-                                                   class="nav-item nav-link">Ontology
+                                                   class="nav-item nav-link active">Ontology
                                                 </a>
                                                 <a class="nav-item nav-link"
-                                                   href="https://github.com/glottobank/cldf/tree/master/examples">
+                                                   href="/examples.html">
                                                     Examples
                                                 </a>
                                             </div>
