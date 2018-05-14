@@ -98,7 +98,7 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                 <a href="https://github.com/glottobank/cldf"
                                                    class="nav-item nav-link">Specification
                                                 </a>
-                                                <a href="v1.0/terms.rdf"
+                                                <a href="terms.rdf"
                                                    class="nav-item nav-link active">Ontology
                                                 </a>
                                                 <a class="nav-item nav-link"
