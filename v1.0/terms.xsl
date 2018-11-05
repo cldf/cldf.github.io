@@ -69,9 +69,9 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                     <div class="container-nav">
                                         <div class="nav-container">
                                             <div class="navbar-brand">
-                                                <a href="http://cldf.clld.org">
+                                                <a href="https://cldf.clld.org">
                                                     <img width="150"
-                                                         src="http://cldf.clld.org/logos/logo_straight.png"
+                                                         src="https://cldf.clld.org/logos/logo_straight.png"
                                                          alt="CLDF"/>
                                                 </a>
                                             </div>
@@ -277,7 +277,7 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                 <td style="width: 33%; text-align: left; padding-top: 10px;">
                                                     <a href="http://calc.digling.org"
                                                        style="border: none;">
-                                                        <img src="http://cldf.clld.org/logos/European_Research_Council_logo.svg"
+                                                        <img src="https://cldf.clld.org/logos/European_Research_Council_logo.svg"
                                                              alt="erc-logo"
                                                              style="width:100px;"/>
                                                     </a>
@@ -285,14 +285,14 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                 <td style="width: 33%; text-align: center;">
                                                     <a href="http://glottobank.org"
                                                        style="border: none;">
-                                                        <img src="http://cldf.clld.org/logos/glottobank.png"
+                                                        <img src="https://cldf.clld.org/logos/glottobank.png"
                                                              alt="" style="width:100px;"/>
                                                     </a>
                                                 </td>
                                                 <td style="width: 33%; text-align: right; padding-top: 10px;">
                                                     <a href="http://www.shh.mpg.de/"
                                                        style="border: none;">
-                                                        <img src="http://cldf.clld.org/logos/max-planck-logo.svg"
+                                                        <img src="https://cldf.clld.org/logos/max-planck-logo.svg"
                                                              alt="mpi-logo"
                                                              style="width:100px;"/>
                                                     </a>
