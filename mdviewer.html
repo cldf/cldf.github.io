@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>CLDF - Cross-Linguistic Data Formats - Examples</title>
+<script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+</head>
+
+<body class="site">
+<header class="site-header">
+    <nav>
+        <div class="sticky-nav">
+            <div class="container-nav">
+                <div class="nav-container">
+                    <div class="navbar-brand"><a href="http://cldf.clld.org">
+                        <img width="150" src="logos/logo_straight.png" alt="CLDF">
+                    </a></div>
+                    <div class="navbar-nav nav-mobile">
+                        <a class="nav-item nav-link btn btn-nav" href="/">Home</a>
+                        <a class="nav-item nav-link btn btn-nav" href="https://github.com/cldf/cldf">Specification</a>
+                        <a class="nav-item nav-link btn btn-nav" href="v1.0/terms.rdf">Ontology</a>
+                        <a class="nav-item nav-link btn btn-nav"
+                           href="/examples.html">Examples</a>
+                    </div>
+                    <div class="navbar-nav nav-main">
+                        <a class="nav-item nav-link" href="/">Home</a>
+                        <a href="https://github.com/cldf/cldf" class="nav-item nav-link">Specification</a>
+                        <a href="v1.0/terms.rdf" class="nav-item nav-link">Ontology</a>
+                        <a class="nav-item nav-link active"
+                           href="/examples.html">Examples</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="site-content">
+    <section class="pad-top">
+        <div class="container">
+            <h2 class="headline text-center">CLDF Metadata Viewer</h2>
+        </div>
+    </section>
+    <section class="section-main">
+        <div class="container pad-top">
+            <div class="service-flexrow">
+                <div class="column-50 gray-box">
+                    <p>Upload a local CLDF metadata file to view its content.</p>
+<input type="file" id="file" name="file" />
+
+<div id="metadata"/>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="site-footer">
+    <!-- expanded_footer -->
+
+    <div class="footer">
+        <div class="container flex-footer">
+            <div class="f-links f-item">
+                <h2>CLDF Specification</h2>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/cldf/cldf/zipball/master">Download
+                        <strong>ZIP File</strong></a></li>
+                    <li><a href="https://github.com/cldf/cldf/tarball/master">Download
+                        <strong>TAR Ball</strong></a></li>
+                    <li><a href="https://github.com/cldf/cldf">View On <strong>GitHub</strong></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="f-about f-item">
+                <h2>About</h2>
+                <p>
+                    CLDF is an initiative by the Glottobank consortium with support from the
+                    Max Planck Institute for the Science of Human History and the ERC project
+                    Computer-Assisted Language Comparison.
+                </p>
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 33%; text-align: left; padding-top: 10px;">
+                            <a href="http://calc.digling.org" style="border: none;">
+                                <img src="logos/European_Research_Council_logo.svg" alt="erc-logo" style="width:100px;"/>
+                            </a>
+                        </td>
+                        <td style="width: 33%; text-align: center;">
+                            <a href="http://glottobank.org" style="border: none;">
+                                <img src="logos/glottobank.png" alt="" style="width:100px;"/>
+                            </a>
+                        </td>
+                        <td style="width: 33%; text-align: right; padding-top: 10px;">
+                            <a href="http://www.shh.mpg.de/" style="border: none;">
+                                <img src="logos/max-planck-logo.svg" alt="mpi-logo" style="width:100px;"/>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="f-contact f-item">
+                <!-- Contact Us -->
+                <h2>Contact Info</h2>
+                <span class="footer-address">Robert Forkel</span><br/>
+                <span class="footer-address" style="font-family: monospace">forkel@shh.mpg.de</span>
+            </div>
+        </div>
+    </div>
+</footer>
+    <script>
+if (window.File && window.FileReader) {
+  // Great success! All the File APIs are supported.
+} else {
+  alert('The File APIs are not fully supported in this browser.');
+}
+
+_.templateSettings = {interpolate: /{{(.+?)}}/g, escape: /{{-(.+?)}}/g};
+
+function escape(s) {
+    return _.template('{{-s}}')({s: s})
+}
+
+function e(tag, attrs, content) {
+    var attr_string = '',
+        content_string = '';
+    for (attr in attrs) {
+        if (attrs.hasOwnProperty(attr)) {
+            attr_string += _.template(' {{k}}="{{v}}"')({k: attr, v: attrs[attr]})
+        }
+    }
+    content = (typeof content !== 'undefined') ?  content : [];
+    content = (typeof content.match !== 'undefined') ? [content] : content;
+    for (var i = 0; i < content.length; i++) {
+        content_string += ' ' + content[i];
+    }
+    return _.template('<{{tag}}{{attrs}}>{{content}}</{{tag}}>')({tag: tag, attrs: attr_string, content: content_string})
+}
+
+
+function link(url, label) {
+    return e('a', {href: url}, [escape(label)])
+}
+
+function term(t) {
+    return link(t, t.split('#')[1])
+}
+
+function module(cldf) {
+    return e('h3', {}, [term(cldf['dc:conformsTo'])])
+}
+
+function notes(cldf) {
+    var res = [],
+        notes_ = (typeof cldf['notes'] !== 'undefined') ? cldf['notes'] : [];
+    notes_.forEach(function(note) {
+        var props = [];
+        if (note['dc:title'] === 'environment') {
+            res.push(e('h4', {}, 'Environment'));
+            for (k in note['properties']) {
+                if (note['properties'].hasOwnProperty(k)) {
+                    props.push(e('dt', {}, escape(k)));
+                    props.push(e('dd', {}, escape(note['properties'][k])));
+                }
+            }
+            res.push(e('dl', {}, props));
+        }
+    });
+    return res.join('\n');
+}
+
+function column(c, t, pks, fks, table_names) {
+    var res = [],
+        label = c.name;
+    if (c.propertyUrl) {
+        label = link(c.propertyUrl, c.name)
+    }
+    res.push(e('strong', {}, [label, e('a', {id: 'col-' + t.url + '-' + c.name})]));
+    if (fks[c.name]) {
+        res.push(escape(' -> '));
+        res.push(link('#col-' + fks[c.name][0] + '-' + fks[c.name][1], table_names[fks[c.name][0]]));
+    }
+    return res.join('\n');
+}
+
+function table(t, table_names) {
+    var res = [],
+        agg = [],
+        pks = (typeof t.tableSchema.primaryKey.match !== 'undefined') ? [t.tableSchema.primaryKey] : t.tableSchema.primaryKey,
+        fks = {};
+    if (typeof t.tableSchema.foreignKeys !== 'undefined') {
+        t.tableSchema.foreignKeys.forEach(function(fk) {
+            var crs = fk.columnReference,
+                refcr = fk.reference.columnReference;
+            if (typeof fk.columnReference.match !== 'undefined') {
+                crs = [fk.columnReference]
+            }
+            if (typeof fk.reference.columnReference.join !== 'undefined') {
+                refcr = fk.reference.columnReference[0];
+            }
+            crs.forEach(function(cr) {
+                fks[cr] = [fk.reference.resource, refcr];
+            })
+        });
+    }
+    if (t['dc:conformsTo']) {
+        agg = ['Component', term(t['dc:conformsTo'])];
+    } else {
+        agg = ['Table'];
+    }
+    res.push(e('h5', {}, agg.concat([
+        'at',
+        e('a', {id: table_names[t.url]}, e('span', {style: 'font-family: monospace'}, t['url']))])));
+    agg = [];
+    t.tableSchema.columns.forEach(function(col) {
+        agg.push(e('li', {}, column(col, t, pks, fks, table_names)));
+    });
+    res.push(e('ul', {}, agg));
+    return res.join('\n')
+}
+
+
+
+  function handleFileSelect(evt) {
+    var file = evt.target.files[0]; // File object
+
+    // files is a FileList of File objects. List some properties.
+    var output = '<strong>' + escape(file.name) + '</strong>';
+    //document.getElementById('list').innerHTML = output;
+
+    var reader = new FileReader();
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e_) {
+         let lines = e_.target.result;
+         var md = JSON.parse(e_.target.result);
+
+        var html = [module(md), notes(md)],
+            table_names = {};
+        md['tables'].forEach(function(t) {
+            if (t['dc:conformsTo']) {
+                table_names[t.url] = t['dc:conformsTo'].split('#')[1];
+            } else {
+                table_names[t.url] = t.url;
+            }
+        });
+        md['tables'].forEach(function(t) {
+            html.push(table(t, table_names));
+        });
+        document.getElementById('metadata').innerHTML = html.join('\n');
+        };
+      })(file);
+
+      // Read in the image file as a data URL.
+      reader.readAsText(file);
+
+  }
+
+  document.getElementById('file').addEventListener('change', handleFileSelect, false);
+
+    </script>
+</body>
+</html>
