@@ -179,12 +179,12 @@ function column(c, t, pks, fks, table_names) {
     if (c.propertyUrl) {
         label = link(c.propertyUrl, c.name)
     }
-    res.push(e('strong', {}, [label, e('a', {id: 'col-' + t.url + '-' + c.name})]));
+    res.push(e('strong', {}, [label, e('a', {id: 'col-' + t.url + '-' + c.name, name: 'col-' + t.url + '-' + c.name}, '#')]));
     if (fks[c.name]) {
         res.push(escape(' -> '));
         res.push(link('#col-' + fks[c.name][0] + '-' + fks[c.name][1], table_names[fks[c.name][0]]));
     }
-    return res.join('\n');
+    return res.join(' ');
 }
 
 function table(t, table_names) {
@@ -212,9 +212,9 @@ function table(t, table_names) {
     } else {
         agg = ['Table'];
     }
-    res.push(e('h5', {}, agg.concat([
-        'at',
-        e('a', {id: table_names[t.url]}, e('span', {style: 'font-family: monospace'}, t['url']))])));
+    agg.push('at');
+    agg.push(e('a', {id: table_names[t.url], name: table_names[t.url], style: 'font-family: monospace'}, t['url']));
+    res.push(e('h5', {}, agg));
     agg = [];
     t.tableSchema.columns.forEach(function(col) {
         agg.push(e('li', {}, column(col, t, pks, fks, table_names)));
