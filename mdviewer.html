@@ -4,9 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>CLDF - Cross-Linguistic Data Formats - Examples</title>
-<script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
+    <link rel="stylesheet" href="stylesheets/mdviewer.css">
     <meta name="viewport" content="width=device-width">
 </head>
 
@@ -112,156 +116,6 @@
         </div>
     </div>
 </footer>
-    <script>
-if (window.File && window.FileReader) {
-  // Great success! All the File APIs are supported.
-} else {
-  alert('The File APIs are not fully supported in this browser.');
-}
-
-_.templateSettings = {interpolate: /{{(.+?)}}/g, escape: /{{-(.+?)}}/g};
-
-function escape(s) {
-    return _.template('{{-s}}')({s: s})
-}
-
-function e(tag, attrs, content) {
-    var attr_string = '',
-        content_string = '';
-    for (attr in attrs) {
-        if (attrs.hasOwnProperty(attr)) {
-            attr_string += _.template(' {{k}}="{{v}}"')({k: attr, v: attrs[attr]})
-        }
-    }
-    content = (typeof content !== 'undefined') ?  content : [];
-    content = (typeof content.match !== 'undefined') ? [content] : content;
-    for (var i = 0; i < content.length; i++) {
-        content_string += ' ' + content[i];
-    }
-    return _.template('<{{tag}}{{attrs}}>{{content}}</{{tag}}>')({tag: tag, attrs: attr_string, content: content_string})
-}
-
-
-function link(url, label) {
-    return e('a', {href: url}, [escape(label)])
-}
-
-function term(t) {
-    return link(t, t.split('#')[1])
-}
-
-function module(cldf) {
-    return e('h3', {}, [term(cldf['dc:conformsTo'])])
-}
-
-function notes(cldf) {
-    var res = [],
-        notes_ = (typeof cldf['notes'] !== 'undefined') ? cldf['notes'] : [];
-    notes_.forEach(function(note) {
-        var props = [];
-        if (note['dc:title'] === 'environment') {
-            res.push(e('h4', {}, 'Environment'));
-            for (k in note['properties']) {
-                if (note['properties'].hasOwnProperty(k)) {
-                    props.push(e('dt', {}, escape(k)));
-                    props.push(e('dd', {}, escape(note['properties'][k])));
-                }
-            }
-            res.push(e('dl', {}, props));
-        }
-    });
-    return res.join('\n');
-}
-
-function column(c, t, pks, fks, table_names) {
-    var res = [],
-        label = c.name;
-    if (c.propertyUrl) {
-        label = link(c.propertyUrl, c.name)
-    }
-    res.push(e('strong', {}, [label, e('a', {id: 'col-' + t.url + '-' + c.name, name: 'col-' + t.url + '-' + c.name}, '#')]));
-    if (fks[c.name]) {
-        res.push(escape(' -> '));
-        res.push(link('#col-' + fks[c.name][0] + '-' + fks[c.name][1], table_names[fks[c.name][0]]));
-    }
-    return res.join(' ');
-}
-
-function table(t, table_names) {
-    var res = [],
-        agg = [],
-        pks = (typeof t.tableSchema.primaryKey.match !== 'undefined') ? [t.tableSchema.primaryKey] : t.tableSchema.primaryKey,
-        fks = {};
-    if (typeof t.tableSchema.foreignKeys !== 'undefined') {
-        t.tableSchema.foreignKeys.forEach(function(fk) {
-            var crs = fk.columnReference,
-                refcr = fk.reference.columnReference;
-            if (typeof fk.columnReference.match !== 'undefined') {
-                crs = [fk.columnReference]
-            }
-            if (typeof fk.reference.columnReference.join !== 'undefined') {
-                refcr = fk.reference.columnReference[0];
-            }
-            crs.forEach(function(cr) {
-                fks[cr] = [fk.reference.resource, refcr];
-            })
-        });
-    }
-    if (t['dc:conformsTo']) {
-        agg = ['Component', term(t['dc:conformsTo'])];
-    } else {
-        agg = ['Table'];
-    }
-    agg.push('at');
-    agg.push(e('a', {id: table_names[t.url], name: table_names[t.url], style: 'font-family: monospace'}, t['url']));
-    res.push(e('h5', {}, agg));
-    agg = [];
-    t.tableSchema.columns.forEach(function(col) {
-        agg.push(e('li', {}, column(col, t, pks, fks, table_names)));
-    });
-    res.push(e('ul', {}, agg));
-    return res.join('\n')
-}
-
-
-
-  function handleFileSelect(evt) {
-    var file = evt.target.files[0]; // File object
-
-    // files is a FileList of File objects. List some properties.
-    var output = '<strong>' + escape(file.name) + '</strong>';
-    //document.getElementById('list').innerHTML = output;
-
-    var reader = new FileReader();
-      // Closure to capture the file information.
-      reader.onload = (function(theFile) {
-        return function(e_) {
-         let lines = e_.target.result;
-         var md = JSON.parse(e_.target.result);
-
-        var html = [module(md), notes(md)],
-            table_names = {};
-        md['tables'].forEach(function(t) {
-            if (t['dc:conformsTo']) {
-                table_names[t.url] = t['dc:conformsTo'].split('#')[1];
-            } else {
-                table_names[t.url] = t.url;
-            }
-        });
-        md['tables'].forEach(function(t) {
-            html.push(table(t, table_names));
-        });
-        document.getElementById('metadata').innerHTML = html.join('\n');
-        };
-      })(file);
-
-      // Read in the image file as a data URL.
-      reader.readAsText(file);
-
-  }
-
-  document.getElementById('file').addEventListener('change', handleFileSelect, false);
-
-    </script>
+<script type="text/javascript" src="javascripts/mdviewer.js"></script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+li.column {margin-bottom: -2px;}
+.fname {font-family: monospace; font-size: smaller}
+
+
+dl.common_properties:before,
+dl.common_properties:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+dl.common_properties dt:after {
+    content: ":";
+}
+dl.common_properties dt {
+  float: left;
+  width: 100px;
+  clear: left;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+dl.common_properties dd {
+  margin-left: 120px;
+}
+
+ul.value_list {list-style: none}
