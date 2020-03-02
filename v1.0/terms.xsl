@@ -80,11 +80,15 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                    href="/">Home
                                                 </a>
                                                 <a class="nav-item nav-link btn btn-nav"
-                                                   href="https://github.com/glottobank/cldf">
+                                                   href="https://github.com/cldf/cldf">
                                                     Specification
                                                 </a>
                                                 <a class="nav-item nav-link btn btn-nav"
                                                    href="terms.rdf">Ontology
+                                                </a>
+                                                <a class="nav-item nav-link btn btn-nav"
+                                                   href="/publications.html">
+                                                    Publications
                                                 </a>
                                                 <a class="nav-item nav-link btn btn-nav"
                                                    href="/examples.html">
@@ -95,12 +99,14 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                 <a class="nav-item nav-link"
                                                    href="/">Home
                                                 </a>
-                                                <a href="https://github.com/glottobank/cldf"
+                                                <a href="https://github.com/cldf/cldf"
                                                    class="nav-item nav-link">Specification
                                                 </a>
                                                 <a href="terms.rdf"
                                                    class="nav-item nav-link active">Ontology
                                                 </a>
+                                                <a class="nav-item nav-link"
+                                                   href="/publications.html">Publications</a>
                                                 <a class="nav-item nav-link"
                                                    href="/examples.html">
                                                     Examples
@@ -244,19 +250,19 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                         <h2>CLDF Specification</h2>
                                         <ul class="footer-links">
                                             <li>
-                                                <a href="https://github.com/glottobank/cldf/zipball/master">
+                                                <a href="https://github.com/cldf/cldf/zipball/master">
                                                     Download
                                                     <strong>ZIP File</strong>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://github.com/glottobank/cldf/tarball/master">
+                                                <a href="https://github.com/cldf/cldf/tarball/master">
                                                     Download
                                                     <strong>TAR Ball</strong>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://github.com/glottobank/cldf">
+                                                <a href="https://github.com/cldf/cldf">
                                                     View On
                                                     <strong>GitHub</strong>
                                                 </a>
