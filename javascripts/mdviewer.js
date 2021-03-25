@@ -86,7 +86,9 @@ function common_properties(cldf) {
                 if (prop === 'dc:source') {
                     value = fname(cldf[prop]);
                 } else {
-                    if (Array.isArray(cldf[prop])) {
+                    if (!cldf[prop]) {
+                        continue
+                    } else if (Array.isArray(cldf[prop])) {
                         agg = [];
                         cldf[prop].forEach(function(v) {agg.push(e('li', {}, stringify(v)))});
                         value = e('ul', {class: 'value_list'}, agg);
