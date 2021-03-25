@@ -57,7 +57,16 @@ function module(cldf, fn) {
 }
 
 function stringify(o) {
-    if (typeof o.match === 'undefined') {
+    var content;
+    if (typeof o === 'object' && o !== null) {
+        content = '';
+        for (prop in o) {
+            if (o.hasOwnProperty(prop)) {
+                content += e('tr', {}, e('th', {'style': 'text-align: right; font-weight: bold;'}, prop) + e('td', {}, stringify(o[prop])));
+            }
+        }
+        return e('table', {}, content);
+    } else if (typeof o.match === 'undefined') {
         return JSON.stringify(o, null, 2);
     }
     return o;
@@ -105,6 +114,10 @@ function column(c, t, pks, fks, table_names) {
     if (fks[c.name]) {
         res.push(escape(' -> '));
         res.push(link('#col-' + fks[c.name][0] + '-' + fks[c.name][1], table_names[fks[c.name][0]]));
+    }
+    if (c['dc:description']) {
+        res.push(':')
+        res.push(e('emph', {}, c['dc:description']));
     }
     return res.join('\n');
 }
