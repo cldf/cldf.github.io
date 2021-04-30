@@ -414,7 +414,8 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
             </dd>
             <dt>Version info:</dt>
             <dd>
-                <xsl:value-of select="owl:Ontology/owl:versionInfo/text()"/>
+                <xsl:value-of select="owl:Ontology/owl:versionInfo/@rdf:resource"/>
+                (supersedes <xsl:value-of select="owl:Ontology/owl:priorVersion/@rdf:resource"/>)
             </dd>
         </dl>
         <h2 id="modules">
