@@ -86,7 +86,7 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                 <a class="nav-item nav-link btn btn-nav"
                                                    href="terms.rdf">Ontology
                                                 </a>
-                                                <a href="v1.0/terms.html" class="nav-item nav-link">(HTML)</a>
+                                                <a href="/v1.0/terms.html" class="nav-item nav-link">(HTML)</a>
                                                 <a class="nav-item nav-link btn btn-nav"
                                                    href="/publications.html">
                                                     Publications
@@ -106,7 +106,7 @@ div.navbar-nav > a { font-size: 1.7rem !important; }
                                                 <a href="terms.rdf"
                                                    class="nav-item nav-link active">Ontology
                                                 </a>
-                                                <a href="v1.0/terms.html" class="nav-item nav-link">(HTML)</a>
+                                                <a href="/v1.0/terms.html" class="nav-item nav-link">(HTML)</a>
                                                 <a class="nav-item nav-link"
                                                    href="/publications.html">Publications</a>
                                                 <a class="nav-item nav-link"
